@@ -2,6 +2,9 @@ import time
 
 
 class Solution:
+    """
+    递归+备忘录解法
+    """
     def __init__(self):
         self.memo = {}
 
@@ -31,6 +34,9 @@ class Solution:
 
 
 class Solution2:
+    """
+    dp table 解法
+    """
     def minDistance(self, word1: str, word2: str) -> int:
         m, n = len(word1), len(word2)
         dp = [[0] * (n + 1) for _ in range(m + 1)]
@@ -59,6 +65,9 @@ class Node:
 
 
 class Solution3:
+    """
+    获取详细的选择路径
+    """
     def minDistance(self, word1: str, word2: str) -> int:
         m, n = len(word1), len(word2)
         dp = [[Node(0, 0)] * (n + 1) for _ in range(m + 1)]
@@ -70,7 +79,7 @@ class Solution3:
         for i in range(1, m + 1):
             for j in range(1, n + 1):
                 if word1[i - 1] == word2[j - 1]:
-                    dp[i][j] = Node(dp[i - 1][j - 1].val,0)
+                    dp[i][j] = Node(dp[i - 1][j - 1].val, 0)
                 else:
                     # dp[i][j] = (min(dp[i][j - 1], dp[i - 1][j], dp[i - 1][j - 1])) + 1
                     # 替换、删除、插入 ==> 1,2,3
@@ -78,7 +87,7 @@ class Solution3:
                     dp_node = Node(node.val + 1, idx)
                     dp[i][j] = dp_node
         for i in range(1, m + 1):
-            for j in range(1,n + 1):
+            for j in range(1, n + 1):
                 print([dp[i][j].val, dp[i][j].choice], end=' ')
             print()
         return dp[m][n].val
